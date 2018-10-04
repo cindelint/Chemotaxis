@@ -1,7 +1,7 @@
 //declare bacteria variables here
 Bacteria[] bob;
 int xPos = 250, yPos = 250;
-String[] message = new String[] {"your apush hw", "college", "be a well rounded person", "avoid being obsessed with college", "more college", "feeling inadequate", "parents", "some homework", "that one project due tomorrow that you havent started"};
+String[] message = new String[] {"your apush hw", "college", "be a well rounded person", "college", "avoid being obsessed with college", "more college", "feeling inadequate", "parents", "some homework", "that one project due tomorrow that you havent started"};
 
 
 void setup() {
