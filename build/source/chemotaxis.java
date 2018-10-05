@@ -16,9 +16,10 @@ public class chemotaxis extends PApplet {
 
 //declare bacteria variables here
 Bacteria[] bob;
-int xPos = 250, yPos = 250;
-String[] message = new String[] {"your apush hw", "college", "be a well rounded person", "avoid being obsessed with college", "more college", "feeling inadequate", "parents", "some homework", "that one project due tomorrow that you havent started"};
-
+int xPos = 200, yPos = 200;
+String[] message = new String[] {"debra", "bob", "clyde", "blinky", "bonnie", "bert" ,"bobert", "richard", "jenjamin", "betty", "betsy", "bennifer"};
+boolean ownSword = false;
+float sX, sY;
 
 public void setup() {
   
@@ -29,58 +30,73 @@ public void setup() {
   }
 
   textAlign(CENTER, CENTER);
+  rectMode(CENTER);
+  sX = (float) (Math.random() * width);
+  sY = (float) (Math.random() * height);
 }
 
 public void draw() {
-  background(200);
+  background(197, 212, 221);
   for (int i=0; i<bob.length; i++) {
     bob[i].show();
     bob[i].move();
-    if (abs(bob[i].myX - xPos) < 3 && abs(bob[i].myY - yPos) < 3) {
-      background(255,0,0);
+    if (abs(bob[i].myX - xPos) < 3 && abs(bob[i].myY - yPos) < 3 && bob[i].exist) {
+      //background(204, 104, 104);
       fill(0);
-      textSize(50);
-      text("rip", 250, 250);
+      textSize(100);
+      if (!ownSword) {
+        text("rip", 200, 200);
+      } else {
+        text("k i l l", 200, 200);
+        if (key == ' ') {
+          bob[i].exist = false;
+        }
+      }
     }
   }
-
   person();
+  sword();
 }
 
 class Bacteria {
-  //lots of java!
   float myX, myY;
   int myMessage;
+  int myColor;
+  boolean exist;
   Bacteria() {
     myX = (float) Math.random() * width;
     myY = (float) Math.random() * height;
     myMessage = (int) (Math.random() * message.length);
+    myColor = color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255));
+    exist = true;
   }
   public void move() {
     if (xPos > myX) {
-      myX += (float) (Math.random() * 7) - 2;
+      myX += (Math.random() * 7) - 2;
     } else {
-      myX += (float) (Math.random() * 7) - 4;
+      myX += (Math.random() * 7) - 4;
     }
     if (yPos > myY) {
-      myY += (float) (Math.random() * 7) - 2;
+      myY += (Math.random() * 7) - 2;
     } else {
-      myY += (float) (Math.random() * 7) - 4;
+      myY += (Math.random() * 7) - 4;
     }
 
   }
   public void show() {
-    fill(100);
-    ellipse(myX, myY, 15,15);
-    fill(0);
-    textSize(9);
-    text(message[myMessage], myX, myY);
+    if (exist) {
+      stroke(0);
+      fill(myColor);
+      ellipse((float) myX, (float) myY, 15,15);
+      fill(0);
+      textSize(10);
+      text(message[myMessage], myX, myY);
+    }
   }
 }
 
 
 public void person() {
-
   if (keyPressed) {
     if (keyCode == LEFT && xPos>0) {
       xPos-=5;
@@ -93,13 +109,37 @@ public void person() {
       yPos+=5;
     }
   }
+  stroke(0);
   fill(255,0,0);
   ellipse(xPos, yPos, 20, 20);
   stroke(0);
   ellipse(xPos-4, yPos-2, 1, 1);
   ellipse(xPos+4, yPos-2, 1, 1);
+  if (ownSword) {
+    fill(150);
+    stroke(70);
+    rect(xPos-8, yPos-1, 4, 13);
+    line(xPos-8, yPos+6, xPos-8, yPos-3);
+    fill(50);
+    rect(xPos-8, yPos+7, 6, 2);
+    rect(xPos-8, yPos+10, 3, 5);
+  }
 }
-  public void settings() {  size(500,500); }
+
+public void sword() {
+  if (!ownSword) {
+    fill(0);
+    if (abs(sX - xPos) < 20 && abs(sY - yPos) < 20) {
+      fill(100);
+      if (keyPressed && key == ' ') {
+        ownSword = true;
+      }
+    }
+    noStroke();
+    rect(sX, sY, 20, 20);
+  }
+}
+  public void settings() {  size(400,400); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "chemotaxis" };
     if (passedArgs != null) {
