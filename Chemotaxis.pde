@@ -11,7 +11,7 @@ boolean beingKilled;
 
 void setup() {
   size(400,400);
-  bob = new Bacteria[75];
+  bob = new Bacteria[70];
   for (int i=0; i<bob.length; i++) {
     bob[i] = new Bacteria();
   }
@@ -19,7 +19,7 @@ void setup() {
   rectMode(CENTER);
   sX = (float) (Math.random() * width);
   sY = (float) (Math.random() * height);
-  killCount = new String[75];
+  killCount = new String[bob.length];
 }
 
 void draw() {
@@ -49,8 +49,15 @@ void draw() {
   sword();
   textSize(11);
   text("kill record: ", 50, 30);
+  line(20,37,75,37);
   for (int i=0; i<kc; i++) {
-    text(killCount[i], 50, 50+i*14);
+    if (i<25) {
+      text(killCount[i], 50, 50+i*14);
+    } else if (i<50) {
+      text(killCount[i], 100, 50+(i-25)*14);
+    } else {
+      text(killCount[i], 150, 50+(i-50)*14);
+    }
   }
 }
 
